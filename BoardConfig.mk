@@ -1,0 +1,55 @@
+LOCAL_PATH := device/huawei/generic_a53
+
+# Bootloader
+TARGET_NO_BOOTLOADER := true
+TARGET_BOOTLOADER_BOARD_NAME := msm8953
+
+# Platform
+TARGET_BOARD_PLATFORM := msm8953
+TARGET_BOARD_PLATFORM_GPU := qcom-adreno506
+
+# Flags
+#TARGET_GLOBAL_CFLAGS +=
+#TARGET_GLOBAL_CPPFLAGS +=
+#COMMON_GLOBAL_CFLAGS +=
+
+# Architecture
+TARGET_ARCH := arm
+TARGET_ARCH_VARIANT := armv7-a-neon
+TARGET_CPU_ABI := armeabi-v7a
+TARGET_CPU_ABI2 := armeabi
+TARGET_CPU_VARIANT := cortex-a53
+
+# Kernel
+BOARD_KERNEL_BASE := 0x80008000
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_CMDLINE := loglevel=4 initcall_debug=n page_tracker=on androidboot.selinux=permissive
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000
+TARGET_PREBUILT_KERNEL := device/huawei/generic_a53/recovery/kernel
+
+# Partitions
+BOARD_BOOTIMAGE_PARTITION_SIZE		:= 39910696
+BOARD_RECOVERYIMAGE_PARTITION_SIZE	:= 51492140
+BOARD_SYSTEMIMAGE_PARTITION_SIZE	:= 3077781104
+BOARD_FLASH_BLOCK_SIZE			:= 4096
+
+# File systems
+BOARD_HAS_LARGE_FILESYSTEM := true
+TARGET_USERIMAGES_USE_EXT4 := true
+TARGET_USERIMAGES_USE_F2FS := true
+
+# Recovery
+TARGET_RECOVERY_FSTAB := device/huawei/generic_a53/recovery/root/etc/twrp.fstab
+TARGET_USERIMAGES_USE_EXT4 := true
+
+# TWRP
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TARGET_RECOVERY_QCOM_RTC_FIX := true
+BOARD_SUPPRESS_SECURE_ERASE := true
+RECOVERY_SDCARD_ON_DATA := true
+TW_DEFAULT_EXTERNAL_STORAGE := true
+TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
+TW_INCLUDE_CRYPTO := true
+TW_THEME := portrait_hdpi
+
+

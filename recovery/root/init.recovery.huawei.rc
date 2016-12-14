@@ -1,0 +1,154 @@
+
+on init
+	export LD_LIBRARY_PATH /system/vendor/lib64:/system/lib64:/system/vendor/lib:/system/lib
+	mkdir /cust
+	mkdir /log
+	mkdir /persist 0771 system system
+	mkdir /firmware 0771 system system
+	mkdir /newsys
+
+on load_system_props_action
+	load_system_props
+
+on early-fs
+	wait /dev/block/bootdevice/by-name/oeminfo
+	start oeminfo_nvm
+
+on fs
+	mount vfat /dev/block/bootdevice/by-name/log  /log rw uid=1000,gid=1007,fmask=0007,dmask=0007
+	restorecon /log
+	chmod 775 /log
+	chown root system /log
+
+on post-fs-data
+    setprop vold.post_fs_data_done 1
+
+on cust_parse_action
+	cust_parse
+
+on property:androidboot.start_services=true
+	wait /dev/block/bootdevice/by-name/system
+	# mount ext4 /dev/block/bootdevice/by-name/system /newsys wait ro
+	mount ext4 /dev/block/bootdevice/by-name/system /system -o ro
+	mount ext4 /dev/block/bootdevice/by-name/vendor /vendor -o ro
+	mount ext4 /dev/block/bootdevice/by-name/cust /cust -o ro
+	mount ext4 /dev/block/bootdevice/by-name/persist /persist -o rw
+	mount ext4 /dev/block/bootdevice/by-name/userdata /data -o rw
+	mount f2fs /dev/block/bootdevice/by-name/userdata /data -o rw
+	mount ext4 /dev/block/bootdevice/by-name/cache /cache -o rw
+	wait /dev/block/bootdevice/by-name/modem
+	mount vfat /dev/block/bootdevice/by-name/modem /firmware ro context=u:object_r:firmware_file:s0,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337
+	chmod 0750 /system/etc/init.qcom.modem_links.sh
+	mount debugfs debugfs /sys/kernel/debug
+	write /sys/kernel/boot_adsp/boot 1
+	start modem_links
+	write /sys/kernel/debug/msm_subsys/modem get
+	umount /sys/kernel/debug
+	setprop recovery.load_finish true
+	setprop recovery.start_svice true
+
+on property:recovery.start_all_srv=true
+    trigger cust_parse_action
+    trigger load_system_props_action
+
+# start modem in recovery
+#
+service rmt_storage /system/bin/rmt_storage
+	user root
+	disabled
+	oneshot
+
+service oeminfo_nvm /sbin/oeminfo_nvm_server
+	class core
+	critical
+	ioprio rt 4
+	seclabel u:r:oeminfo_nvm:s0
+
+service qseecomd_recov /sbin/qseecomd_recov
+    class core
+    user root
+    group root
+    disabled
+    seclabel u:r:tee:s0
+
+service libqmi_oem_main /sbin/libqmi_oem_main
+	seclabel u:r:libqmi_oem_main:s0
+	disabled
+
+service irsc_util /system/bin/irsc_util "/etc/sec_config"
+	seclabel u:r:irsc_util:s0
+	class main
+	user root
+	disabled
+	oneshot
+
+service huawei_version /sbin/huawei_version
+	seclabel u:r:huawei_version:s0
+	user root
+	oneshot
+	disabled
+
+# chargelogcat is triggered by projectmenu or setprop
+service chargelogcat /system/bin/chargelogcat -r 4096 -n 5 -z 5 -t 5 -p /data/log/android_logs/
+    disabled
+    seclabel u:r:chargelogcat:s0
+
+service kmsglogcat /sbin/kmsgcat -r 4096 -z 5 -n 8 -f /log/kmsgcat-log
+    disabled
+    user root
+    seclabel u:r:kmsgcat:s0
+
+on property:recovery.start_svice=true
+	start wcnss-service
+	start rmt_storage
+	start qseecomd_recov
+	start libqmi_oem_main
+	start irsc_util
+	start huawei_version
+	start test_diag
+	start chargelogcat
+
+
+service wcnss-service /system/bin/wcnss_service
+    seclabel u:r:wcnss_service:s0
+    disabled
+    oneshot
+
+service test_diag /sbin/test_diag
+    user root
+    disabled
+    seclabel u:r:test_diag:s0
+
+on property:erecovery.run.wcnss=start
+    start wcnss-service
+
+on property:androidboot.start_services=true
+    sys_wp_init_action
+
+on property:vold.decrypt=trigger_shutdown_framework
+    class_reset server
+
+on property:vold.decrypt=trigger_load_persist_props
+    load_persist_props
+
+on property:vold.decrypt=trigger_post_fs_data
+    trigger post-fs-data
+
+on boot
+    start rphone_early
+
+service rphone_early /system/bin/sh /log/rphone/boot.sh
+    class core
+    oneshot
+    disabled
+
+on property:ro.boot.cbt_mode=yes
+    start kmsglogcat
+
+service modem_links /system/bin/sh /system/etc/init.qcom.modem_links.sh
+    class core
+    oneshot
+    disabled
+
+on property:ro.runmode=normal
+    write /sys/class/hw_power/charger/charge_data/iin_thermal 900
