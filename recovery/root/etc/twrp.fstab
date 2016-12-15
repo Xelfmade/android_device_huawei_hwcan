@@ -1,10 +1,8 @@
-#mount point      fstype      device      					flags
-
 /system           ext4        /dev/block/bootdevice/by-name/system		flags=display="system";backup=1
 /vendor           ext4        /dev/block/bootdevice/by-name/vendor		flags=display="vendor";backup=1
 /product          ext4        /dev/block/bootdevice/by-name/product		flags=display="product";backup=1
 /version          ext4        /dev/block/bootdevice/by-name/version		flags=display="version";backup=1
-/cache            ext4        /dev/block/bootdevice/by-name/cache		flag=display="cache";backup=1
+/cache            ext4        /dev/block/bootdevice/by-name/cache		flags=display="cache";backup=1
 /data             f2fs        /dev/block/bootdevice/by-name/userdata		flags=display="data";backup=1
 /sdcard           vfat        /dev/block/mmcblk1p1				flags=display="MicroSD Card";storage;wipeingui;removeable
 /boot             emmc        /dev/block/bootdevice/by-name/boot		flags=display="boot";backup=1
