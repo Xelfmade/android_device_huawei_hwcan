@@ -1,10 +1,9 @@
 /system           ext4        /dev/block/platform/soc/7824900.sdhci/by-name/system		flags=display="system";backup=1
 /cache            ext4        /dev/block/platform/soc/7824900.sdhci/by-name/cache		flags=display="cache";backup=1
 /data             f2fs        /dev/block/platform/soc/7824900.sdhci/by-name/userdata		flags=display="data";backup=1
-/sdcard           vfat        /dev/block/mmcblk1p1				flags=display="MicroSD Card";storage;wipeingui;removeable
+/sdcard   	  vfat        /dev/block/mmcblk1p1	/dev/block/mmcblk1			flags=display="MicroSD Card";storage;wipeingui;removeable
 /boot             emmc        /dev/block/platform/soc/7824900.sdhci/by-name/boot		flags=display="boot";backup=1
 /recovery         emmc        /dev/block/platform/soc/7824900.sdhci/by-name/recovery		flags=display="recovery";backup=1
-/usb              vfat        /dev/block/sda1   				flags=display="USB OTG";storage;wipeingui;removeable
 /newsys           ext4        /dev/block/platform/soc/7824900.sdhci/by-name/system
 /cust             ext4        /dev/block/platform/soc/7824900.sdhci/by-name/cust
 /misc             emmc        /dev/block/platform/soc/7824900.sdhci/by-name/misc
