@@ -1,12 +1,12 @@
-/system           ext4        /dev/block/platform/soc/7824900.sdhci/by-name/system		flags=display="system";backup=1
-/cache            ext4        /dev/block/platform/soc/7824900.sdhci/by-name/cache		flags=display="cache";backup=1
-/data             f2fs        /dev/block/platform/soc/7824900.sdhci/by-name/userdata		flags=display="data";backup=1
+/system           ext4        /dev/block/platform/soc/7824900.sdhci/by-name/system		flags=display="System";backup=1
+/cache            ext4        /dev/block/platform/soc/7824900.sdhci/by-name/cache		flags=display="Cache";backup=1
+/data             f2fs        /dev/block/platform/soc/7824900.sdhci/by-name/userdata		flags=display="Data";backup=1
 /external_sd   	  vfat        /dev/block/mmcblk1p1	/dev/block/mmcblk1			flags=display="MicroSD Card";storage;wipeingui;removable
 /usbotg		  vfat	      /dev/block/sda1	/dev/block/sda					flags=display="USB OTG";storage;removable;backup=0
-/boot             emmc        /dev/block/platform/soc/7824900.sdhci/by-name/boot		flags=display="boot";backup=1
-/recovery         emmc        /dev/block/platform/soc/7824900.sdhci/by-name/recovery		flags=display="recovery";backup=1
+/boot             emmc        /dev/block/platform/soc/7824900.sdhci/by-name/boot		flags=display="Boot";backup=1
+/recovery         emmc        /dev/block/platform/soc/7824900.sdhci/by-name/recovery		flags=display="Recovery";backup=1
 /newsys           ext4        /dev/block/platform/soc/7824900.sdhci/by-name/system
-/cust             ext4        /dev/block/platform/soc/7824900.sdhci/by-name/cust
-/misc             emmc        /dev/block/platform/soc/7824900.sdhci/by-name/misc
-/firmware         vfat        /dev/block/platform/soc/7824900.sdhci/by-name/modem
-/log              vfat        /dev/block/platform/soc/7824900.sdhci/by-name/log
+/cust             ext4        /dev/block/platform/soc/7824900.sdhci/by-name/cust		flags=display="Cust";backup=1
+/misc             emmc        /dev/block/platform/soc/7824900.sdhci/by-name/misc		flags=display="Misc";backup=1
+/firmware         vfat        /dev/block/platform/soc/7824900.sdhci/by-name/modem		flags=display="Modem";backup=1
+/log              vfat        /dev/block/platform/soc/7824900.sdhci/by-name/log			flags=display="Log";backup=1
