@@ -15,13 +15,13 @@
 ## Specify phone tech before including full_phone
 $(call inherit-product, vendor/omni/config/gsm.mk)
 
-$(call inherit-product, device/huawei/generic_a53/generic_a53.mk)
+$(call inherit-product, device/huawei/hwcan/hwcan.mk)
 
 # Inherit some common Omni stuff.
 $(call inherit-product, vendor/omni/config/common.mk)
 
-PRODUCT_MODEL := generic_a53
+PRODUCT_MODEL := hwcan
 PRODUCT_BRAND := Huawei
 PRODUCT_MANUFACTURER := Huawei
-PRODUCT_NAME := omni_generic_a53
-PRODUCT_DEVICE := generic_a53
+PRODUCT_NAME := omni_hwcan
+PRODUCT_DEVICE := hwcan

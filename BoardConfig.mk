@@ -1,4 +1,4 @@
-LOCAL_PATH := device/huawei/generic_a53
+LOCAL_PATH := device/huawei/hwcan
 
 # Bootloader
 TARGET_NO_BOOTLOADER := true
@@ -25,7 +25,7 @@ BOARD_KERNEL_BASE := 0x80008000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE := loglevel=4 initcall_debug=n page_tracker=on androidboot.selinux=permissive
 BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000
-TARGET_PREBUILT_KERNEL := device/huawei/generic_a53/recovery/kernel
+TARGET_PREBUILT_KERNEL := device/huawei/hwcan/recovery/kernel
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE		:= 83886080
@@ -41,7 +41,7 @@ TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
 
 # Recovery
-TARGET_RECOVERY_FSTAB := device/huawei/generic_a53/recovery/root/etc/twrp.fstab
+TARGET_RECOVERY_FSTAB := device/huawei/hwcan/recovery/root/etc/twrp.fstab
 TARGET_USERIMAGES_USE_EXT4 := true
 
 # TWRP

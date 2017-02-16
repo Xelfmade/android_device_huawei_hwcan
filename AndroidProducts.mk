@@ -14,5 +14,5 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-	$(LOCAL_DIR)/omni_generic_a53.mk \
-	$(LOCAL_DIR)/generic_a53.mk
+	$(LOCAL_DIR)/omni_hwcan.mk \
+	$(LOCAL_DIR)/hwcan.mk
