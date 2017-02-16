@@ -1,1 +1,1 @@
-# android_device_generic_a53
+# android_device_huawei_hwcan
